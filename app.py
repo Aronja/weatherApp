@@ -1,26 +1,21 @@
 import requests
 import json
+from geopy.geocoders import Nominatim
 
-#
-# DARK_SKY_API_KEY="70573f8f45cd15ab543902b7d5540fcb"
-#
-# #req = requests.request('GET', 'https://api.darksky.net/forecast/0123456789abcdef9876543210fedcba/42.3601,-71.0589'+)
-#
-#
-# response = requests.get("https://api.darksky.net/forecast/"+DARK_SKY_API_KEY)
-# json_res = response.json()
-# print("\n"+(d_from_date + timedelta(days=i)).strftime('%Y-%m-%d %A'))
-#
-#
-# response = requests.get("https://api.darksky.net/forecast/"+"70573f8f45cd15ab543902b7d5540fcb"+"/"+latitude+","+longitude+","+search_date+"?"+option_list)
-#     "paddington, london" 2017-08-05 2017-08-07
-#
+user_input = raw_input("Enter a location: ")
 
-response = requests.get("https://api.darksky.net/forecast/70573f8f45cd15ab543902b7d5540fcb/37.8267,-122.4233")
-print(response)
+geolocator = Nominatim()
+location = geolocator.geocode(user_input)
+longitude = str(location.longitude)
+latitude = str(location.latitude)
+longitude = str(longitude).decode('utf8')
+latitude = str(latitude).decode('utf8')
 
+DARK_SKY_API_KEY="70573f8f45cd15ab543902b7d5540fcb"
+DARK_SKY_API_KEY = str(DARK_SKY_API_KEY).decode('utf8')
 
-response2 = requests.get('https://api.darksky.net/forecast/70573f8f45cd15ab543902b7d5540fcb/42.3601,-71.0589')
-json_data = json.loads(response.text)
+response2 = requests.get('https://api.darksky.net/forecast/'+DARK_SKY_API_KEY+'/'+longitude+','+latitude)
 
+json_data = json.loads(response2.text)
 print(json_data)
+print(response2)
